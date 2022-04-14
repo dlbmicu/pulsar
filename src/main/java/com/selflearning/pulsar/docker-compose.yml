@@ -1,0 +1,23 @@
+version: "3"
+services:
+  pulsar:
+    container_name: pulsar
+    image: apachepulsar/pulsar
+    ports:
+      - "2181:2181"
+      - "6650:6650"
+      - "8080:8080"
+    command: "bin/pulsar standalone"
+    restart: always
+  zkui:
+    container_name: zkui
+    image: juris/zkui
+    depends_on:
+      - pulsar
+    ports:
+      - "9090:9090"
+    environment:
+      ZK_SERVER: pulsar:2181
+
+
+
